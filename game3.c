@@ -380,7 +380,7 @@ void scroll_demo() {
   int x = 0;   // x scroll position
   int y = 0;   // y scroll position
   int dx = 1;  // x scroll direction
-  // infinite loop
+  char oam_id = 0;    
  
     // wait for next frame
     ppu_wait_frame();
@@ -395,22 +395,28 @@ void scroll_demo() {
   if(player_x > 246)
   {
     
-    ppu_wait_frame();
-    clrscr();
-    vram_adr(NTADR_B(1,2));
-    vram_write("Exit?", 5);
+  //  ppu_wait_frame();
+
     
     scroll(x + 256, y);  
-    //put_str(NTADR_B(2,17), "Nametable B1, Line 0");
-    char oam_id = 0;    // sprite ID
-  oam_clear();
-  pal_all(PALETTE);
-  ppu_on_all();
+  //oam_id = 0;    
+    
+  vrambuf_clear();
+  ppu_off();
+  vram_adr(NAMETABLE_A);
+  vram_fill(000000, 32*28);
+  vram_adr(0x0);
+    
+  //put_str(NTADR_A(2,17), "Nametable B1, Line 0");
+
 
   
 
-  oam_id = oam_meta_spr(80, 80, 0, metasprite);
-   
+  oam_id = oam_spr(80, 80, 0x16, 0x02, oam_id);
+
+
+  ppu_on_all();
+
     //m_clear();
      //ambuf_clear();
   }
