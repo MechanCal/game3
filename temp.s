@@ -4,7 +4,7 @@
 
 .segment "CHARS"
 
-.incbin "platformer5.chr"
+.incbin "game3.chr"
 
 .segment "CODE"
 

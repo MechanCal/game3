@@ -6,9 +6,6 @@
 #include "temp.h"
 //#link "temp.s"
 
-#include "game3.chr"
-
-
 #include "Sprites.h" 
 #include "rooms.c"
 #include "game3.h"
