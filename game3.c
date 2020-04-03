@@ -35,7 +35,6 @@ void main (void) {
 	
 	ppu_on_all(); // turn on screen
 	
-//#link "screens.c"
 
 	while (1){    
 		ppu_wait_nmi();
