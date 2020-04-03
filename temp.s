@@ -850,3 +850,5 @@ _seed_rng:
 	
 	
 	
+
+//#link "rooms.c"

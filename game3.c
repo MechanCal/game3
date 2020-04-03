@@ -1,15 +1,14 @@
 #define NES_MIRRORING 1
 #include "neslib.h"
 #include <string.h>
-//#resource "game3.chr"
+//#resource "platformer5.ch"
 
 #include "temp.h"
 //#link "temp.s"
-#include "temp.h"
 
 
 #include "Sprites.h" 
-//#include "screens.c"
+#include "rooms.c"
 #include "game3.h"
 
 /* famitone stuff */
