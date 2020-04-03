@@ -1,10 +1,12 @@
 #define NES_MIRRORING 1
 #include "neslib.h"
 #include <string.h>
-//#resource "platformer5.ch"
+//#resource "game3.chr"
 
 #include "temp.h"
 //#link "temp.s"
+
+#include "game3.chr"
 
 
 #include "Sprites.h" 
@@ -123,9 +125,7 @@ void movement(void){
 		}
 		else {
 			Jim.vel_x -= ACCEL;
-			if(J
-#include "Sprites.h"
-im.vel_x < -MAX_SPEED) Jim.vel_x = -MAX_SPEED;
+			if(Jim.vel_x < -MAX_SPEED) Jim.vel_x = -MAX_SPEED;
 		}
 	}
 	else if (pad1 & PAD_RIGHT){

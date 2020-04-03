@@ -849,6 +849,3 @@ _seed_rng:
 	rts
 	
 	
-	
-
-//#link "rooms.c"
