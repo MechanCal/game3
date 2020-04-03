@@ -10,7 +10,6 @@
 
 #include "Sprites.h" 
 #include "screens.c"
-#include "game3
 #include "game3.h"
 
 /* famitone stuff */
@@ -125,7 +124,9 @@ void movement(void){
 		}
 		else {
 			Jim.vel_x -= ACCEL;
-			if(Jim.vel_x < -MAX_SPEED) Jim.vel_x = -MAX_SPEED;
+			if(J
+#include "Sprites.h"
+im.vel_x < -MAX_SPEED) Jim.vel_x = -MAX_SPEED;
 		}
 	}
 	else if (pad1 & PAD_RIGHT){
