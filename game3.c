@@ -9,7 +9,7 @@
 
 
 #include "Sprites.h" 
-#include "screens.c"
+//#include "screens.c"
 #include "game3.h"
 
 /* famitone stuff */
