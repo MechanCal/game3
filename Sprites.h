@@ -1,6 +1,3 @@
-
-// a 16x16 pixel metasprite
-
 const unsigned char RoundSprL[]={
 	  0xff,  0xfc,0x02,0,
 	  7,  0xfc,0x03,0,
