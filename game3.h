@@ -219,10 +219,14 @@ const unsigned char level_1_enemies[]={
 // PROTOTYPES
 void load_room(void);
 void draw_sprites(void);
-void movement(void);	
+void movement(void);
 void bg_collision(void);
 void draw_screen_R(void);
 void new_cmap(void);
+void bg_collision_sub(void);
 void bg_check_low(void);
 char get_position(void);
-void bg_collision_sub(void);
+void enemy_moves(void);
+void sprite_collisions(void);
+void check_spr_objects(void);
+void sprite_obj_init(void);

@@ -37,6 +37,9 @@ void main (void) {
 		pad1 = pad_state(0);		
 		clear_vram_buffer(); 			
 		movement();
+           	check_spr_objects(); // see which objects are on screen
+		sprite_collisions();
+		enemy_moves();
 		set_scroll_x(scroll_x);
 		set_scroll_y(scroll_y);
 		draw_screen_R();
@@ -44,6 +47,32 @@ void main (void) {
 	}
 }
 
+void check_spr_objects(void){
+	// mark each object "active" if they are, and get the screen x
+	
+	for(index = 0; index < MAX_COINS; ++index){
+		coin_active[index] = 0; //default to zero
+		if(coin_y[index] != TURN_OFF){
+			temp5 = (coin_room[index] << 8) + coin_actual_x[index];
+			coin_active[index] = get_position();
+			coin_x[index] = temp_x; // screen x coords
+		}
+
+	}
+	
+
+	for(index = 0; index < MAX_ENEMY; ++index){
+		enemy_active[index] = 0; //default to zero
+		if(enemy_y[index] != TURN_OFF){
+			temp5 = (enemy_room[index] << 8) + enemy_actual_x[index];
+			enemy_active[index] = get_position();
+			enemy_x[index] = temp_x; // screen x coords
+		}
+
+	}
+
+	
+}
 void load_room(void){
 	set_data_pointer(Rooms[0]);
 	set_mt_pointer(metatiles1); 
@@ -71,19 +100,55 @@ void load_room(void){
 	}
 	clear_vram_buffer();
 	memcpy (c_map, Rooms[0], 240);
-	
+	sprite_obj_init();
+
 }
 
 void draw_sprites(void){
+	// clear all sprites from sprite buffer
 	oam_clear();
+
+	// reset index into the sprite buffer
 	sprid = 0;
 	
+	// draw 1 hero
 	if(direction == LEFT) {
 		sprid = oam_meta_spr(high_byte(Jim.x), high_byte(Jim.y), sprid, RoundSprL);
 	}
 	else{
 		sprid = oam_meta_spr(high_byte(Jim.x), high_byte(Jim.y), sprid, RoundSprR);
 	}
+	
+	
+	for(index = 0; index < MAX_COINS; ++index){
+		temp_y = coin_y[index];
+		if(temp_y == TURN_OFF) continue;
+		if(get_frame_count() & 8) ++temp_y; // bounce the coin
+		temp1 = coin_active[index];
+		temp2 = coin_x[index];
+		if(temp1 && (temp_y < 0xf0)) {
+			sprid = oam_meta_spr(temp2, temp_y, sprid, CoinSpr);
+		}
+	}
+	
+	
+	for(index = 0; index < MAX_ENEMY; ++index){
+		temp_y = enemy_y[index];
+		if(temp_y == TURN_OFF) continue;
+		temp1 = enemy_active[index];
+		temp2 = enemy_x[index];
+		if(temp2 > 0xf0) continue;
+		if(temp1 && (temp_y < 0xf0)) {
+			sprid = oam_meta_spr(temp2, temp_y, sprid, EnemySpr);
+		}
+	}
+	
+	
+	
+	// draw "coins" at the top in sprites
+	sprid = oam_meta_spr(16,16,sprid, CoinsSpr);
+	temp1 = coins + 0xf0;
+	sprid = oam_spr(64,16,temp1,3,sprid);
 }
 	
 void movement(void){
@@ -283,6 +348,62 @@ void bg_collision_sub(void){
 	
 	collision = is_solid[collision];
 }
+void enemy_moves(void){
+	
+	temp1 = high_byte(Jim.x);
+	
+	if(get_frame_count() & 0x01) return; // half speed
+	
+	for(index = 0; index < MAX_ENEMY; ++index){
+		if(enemy_active[index]){
+			if(enemy_x[index] > temp1){
+				if(enemy_actual_x[index] == 0) --enemy_room[index];
+				--enemy_actual_x[index];
+			}
+			else if(enemy_x[index] < temp1){
+				++enemy_actual_x[index];
+				if(enemy_actual_x[index] == 0) ++enemy_room[index];
+			}
+		}
+	}
+}
+void sprite_collisions(void){
+
+	Generic.x = high_byte(Jim.x);
+	Generic.y = high_byte(Jim.y);
+	Generic.width = HERO_WIDTH;
+	Generic.height = HERO_HEIGHT;
+	
+	Generic2.width = COIN_WIDTH;
+	Generic2.height = COIN_HEIGHT;
+	
+	for(index = 0; index < MAX_COINS; ++index){
+		if(coin_active[index]){
+			Generic2.x = coin_x[index];
+			Generic2.y = coin_y[index];
+			if(check_collision(&Generic, &Generic2)){
+				coin_y[index] = TURN_OFF;
+				sfx_play(SFX_DING, 0);
+				++coins;
+			}
+		}
+	}
+
+	Generic2.width = ENEMY_WIDTH;
+	Generic2.height = ENEMY_HEIGHT;
+	
+	for(index = 0; index < MAX_ENEMY; ++index){
+		if(enemy_active[index]){
+			Generic2.x = enemy_x[index];
+			Generic2.y = enemy_y[index];
+			if(check_collision(&Generic, &Generic2)){
+				enemy_y[index] = TURN_OFF;
+				sfx_play(SFX_NOISE, 0);
+				if(coins) --coins;
+			}
+		}
+	}
+}
 
 void draw_screen_R(void){
 	pseudo_scroll_x = scroll_x + 0x120;
@@ -392,4 +513,67 @@ char get_position(void){
 	if(high_byte(temp5)) return 0;
 	return 1;
 }
+void sprite_obj_init(void){
 
+	pointer = level_1_coins;
+	for(index = 0,index2 = 0;index < MAX_COINS; ++index){
+		
+		coin_x[index] = 0;
+
+		temp1 = pointer[index2]; // get a byte of data
+		coin_y[index] = temp1;
+		
+		if(temp1 == TURN_OFF) break;
+
+		++index2;
+		
+		coin_active[index] = 0;
+
+		
+		temp1 = pointer[index2]; // get a byte of data
+		coin_room[index] = temp1;
+		
+		++index2;
+		
+		temp1 = pointer[index2]; // get a byte of data
+		coin_actual_x[index] = temp1;
+		
+		++index2;
+	}
+	
+	for(++index;index < MAX_COINS; ++index){
+		coin_y[index] = TURN_OFF;
+	}
+	
+	
+	
+
+	pointer = level_1_enemies;
+	for(index = 0,index2 = 0;index < MAX_ENEMY; ++index){
+		
+		enemy_x[index] = 0;
+
+		temp1 = pointer[index2]; // get a byte of data
+		enemy_y[index] = temp1;
+		
+		if(temp1 == TURN_OFF) break;
+
+		++index2;
+		
+		enemy_active[index] = 0;
+		
+		temp1 = pointer[index2]; // get a byte of data
+		enemy_room[index] = temp1;
+		
+		++index2;
+		
+		temp1 = pointer[index2]; // get a byte of data
+		enemy_actual_x[index] = temp1;
+		
+		++index2;
+	}
+	
+	for(++index;index < MAX_ENEMY; ++index){
+		enemy_y[index] = TURN_OFF;
+	}
+}
