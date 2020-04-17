@@ -49,17 +49,6 @@ void main (void) {
 
 void check_spr_objects(void){
 	// mark each object "active" if they are, and get the screen x
-	
-	for(index = 0; index < MAX_COINS; ++index){
-		coin_active[index] = 0; //default to zero
-		if(coin_y[index] != TURN_OFF){
-			temp5 = (coin_room[index] << 8) + coin_actual_x[index];
-			coin_active[index] = get_position();
-			coin_x[index] = temp_x; // screen x coords
-		}
-
-	}
-	
 
 	for(index = 0; index < MAX_ENEMY; ++index){
 		enemy_active[index] = 0; //default to zero
@@ -120,17 +109,6 @@ void draw_sprites(void){
 	}
 	
 	
-	for(index = 0; index < MAX_COINS; ++index){
-		temp_y = coin_y[index];
-		if(temp_y == TURN_OFF) continue;
-		if(get_frame_count() & 8) ++temp_y; // bounce the coin
-		temp1 = coin_active[index];
-		temp2 = coin_x[index];
-		if(temp1 && (temp_y < 0xf0)) {
-			sprid = oam_meta_spr(temp2, temp_y, sprid, CoinSpr);
-		}
-	}
-	
 	
 	for(index = 0; index < MAX_ENEMY; ++index){
 		temp_y = enemy_y[index];
@@ -142,13 +120,7 @@ void draw_sprites(void){
 			sprid = oam_meta_spr(temp2, temp_y, sprid, EnemySpr);
 		}
 	}
-	
-	
-	
-	// draw "coins" at the top in sprites
-	sprid = oam_meta_spr(16,16,sprid, CoinsSpr);
-	temp1 = coins + 0xf0;
-	sprid = oam_spr(64,16,temp1,3,sprid);
+
 }
 	
 void movement(void){
