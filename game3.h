@@ -3,7 +3,7 @@
 #define GRAVITY 0x50
 #define MAX_SPEED 0x240
 #define JUMP_VEL -0x600
-#define MAX_RIGHT 0xb000
+#define MAX_RIGHT 0x8000
 
 
 
@@ -193,8 +193,9 @@ const unsigned char * const Rooms[]= {
 
 //y, room, x
 //y = TURN_OFF end of list
+/*{pal:"nes",layout:"nes"}*/
 const unsigned char level_1_coins[]={
-	0x61,0,0x65,
+	0x61,0,0x11,
 	0x81,1,0x85,
 	0x41,2,0x95,
 	0x61,3,0x75,
@@ -204,11 +205,12 @@ const unsigned char level_1_coins[]={
 
 //y, room, x
 //y = TURN_OFF end of list
+/*{pal:"nes",layout:"nes"}*/
 const unsigned char level_1_enemies[]={
-	0xc2,0,0xb0,
-	0xc2,1,0x80,
-	0xc2,2,0xc0,
-	0xc2,3,0xf0,
+	0xC2,0,0xB0,
+	0x01,1,0x80,
+	0xC2,2,0xC0,
+	0xC2,3,0xF0,
 	TURN_OFF
 };
 
