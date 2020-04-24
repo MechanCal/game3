@@ -15,13 +15,47 @@
 
 #define VRAMBUF ((byte*)0x700)
 
-void main (void) {
-	
+
+//void setup_graphics() {
+//  oam_clear();
+ // pal_all(PALETTE);
+//}
+
+void title_screen(void){
+  while(1)
+  {
+    if(pad_trigger(0)&PAD_START || pad_trigger(0)&PAD_A) {
 	ppu_off(); 
-	pal_bg(palette_bg);
+      	//clrscr();
+      	break;
+    }
+  }
+}
+
+
+
+void main (void) {
+ //  vram_adr(NTADR_A(10,18));
+//vram_write("PRESS START!", 12);
+  
+  //vram_adr(NTADR_A(11,10));
+  //vram_write("The Game!", 9);
+  //title_screen();
+ 
+
+  //ppu_on_all();
+
+  
+  
+  
+  	ppu_off(); 
+  	pal_bg(palette_bg);
 	pal_spr(palette_sp);	
 	bank_spr(1);
 	
+  
+  
+  
 	set_vram_buffer(); 
 	clear_vram_buffer();
 	
@@ -49,6 +83,17 @@ void main (void) {
 
 void check_spr_objects(void){
 	// mark each object "active" if they are, and get the screen x
+	
+	for(index = 0; index < MAX_COINS; ++index){
+		coin_active[index] = 0; //default to zero
+		if(coin_y[index] != TURN_OFF){
+			temp5 = (coin_room[index] << 8) + coin_actual_x[index];
+			coin_active[index] = get_position();
+			coin_x[index] = temp_x; // screen x coords
+		}
+
+	}
+	
 
 	for(index = 0; index < MAX_ENEMY; ++index){
 		enemy_active[index] = 0; //default to zero
@@ -110,6 +155,8 @@ void draw_sprites(void){
 	
 	
 	
+	
+	
 	for(index = 0; index < MAX_ENEMY; ++index){
 		temp_y = enemy_y[index];
 		if(temp_y == TURN_OFF) continue;
@@ -120,7 +167,11 @@ void draw_sprites(void){
 			sprid = oam_meta_spr(temp2, temp_y, sprid, EnemySpr);
 		}
 	}
-
+	
+	
+	
+	// 
+	
 }
 	
 void movement(void){
