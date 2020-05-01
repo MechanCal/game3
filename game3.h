@@ -95,18 +95,9 @@ struct Hero Jim = {0x4000,0xc400}; // starting position
 #define HERO_HEIGHT 11
 
 
-#define MAX_COINS 16
-unsigned char coin_x[MAX_COINS];
-unsigned char coin_y[MAX_COINS];
-unsigned char coin_active[MAX_COINS];
-unsigned char coin_room[MAX_COINS];
-unsigned char coin_actual_x[MAX_COINS];
+
 
 #define TURN_OFF 0xff
-#define COIN_WIDTH 7
-#define COIN_HEIGHT 11
-
-
 
 #define MAX_ENEMY 10
 unsigned char enemy_x[MAX_ENEMY];
@@ -194,7 +185,7 @@ const unsigned char * const Rooms[]= {
 //y, room, x
 //y = TURN_OFF end of list
 /*{pal:"nes",layout:"nes"}*/
-const unsigned char level_1_coins[]={
+const unsigned char level_1_enemy[]={
 	0x61,0,0x11,
 	0x81,1,0x85,
 	0x41,2,0x95,

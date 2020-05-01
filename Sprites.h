@@ -15,12 +15,6 @@ const unsigned char RoundSprR[]={
 	128
 };
 
-const unsigned char CoinSpr[]={
-	  0xff,  0xff,0x20,1,
-	  0xff,  7,0x30,1,
-	128
-};
-
 
 const unsigned char EnemySpr[]={
 	  0xff,  0xff,0x04,2,
@@ -31,14 +25,6 @@ const unsigned char EnemySpr[]={
 };
 
 
-const unsigned char CoinsSpr[]={
-	  0,  0,0xfa,3,
-	  8,  0,0xfb,3,
-	  16,  0,0xfc,3,
-	  24,  0,0xfd,3,
-	  32,  0,0xfe,3,
-	128
-};
 
 
 

@@ -44,18 +44,10 @@ void main (void) {
  
 
   //ppu_on_all();
-
-  
-  
-  
   	ppu_off(); 
   	pal_bg(palette_bg);
 	pal_spr(palette_sp);	
 	bank_spr(1);
-	
-  
-  
-  
 	set_vram_buffer(); 
 	clear_vram_buffer();
 	
@@ -84,15 +76,6 @@ void main (void) {
 void check_spr_objects(void){
 	// mark each object "active" if they are, and get the screen x
 	
-	for(index = 0; index < MAX_COINS; ++index){
-		coin_active[index] = 0; //default to zero
-		if(coin_y[index] != TURN_OFF){
-			temp5 = (coin_room[index] << 8) + coin_actual_x[index];
-			coin_active[index] = get_position();
-			coin_x[index] = temp_x; // screen x coords
-		}
-
-	}
 	
 
 	for(index = 0; index < MAX_ENEMY; ++index){
@@ -396,21 +379,7 @@ void sprite_collisions(void){
 	Generic.y = high_byte(Jim.y);
 	Generic.width = HERO_WIDTH;
 	Generic.height = HERO_HEIGHT;
-	
-	Generic2.width = COIN_WIDTH;
-	Generic2.height = COIN_HEIGHT;
-	
-	for(index = 0; index < MAX_COINS; ++index){
-		if(coin_active[index]){
-			Generic2.x = coin_x[index];
-			Generic2.y = coin_y[index];
-			if(check_collision(&Generic, &Generic2)){
-				coin_y[index] = TURN_OFF;
-				sfx_play(SFX_DING, 0);
-				++coins;
-			}
-		}
-	}
+
 
 	Generic2.width = ENEMY_WIDTH;
 	Generic2.height = ENEMY_HEIGHT;
@@ -538,39 +507,8 @@ char get_position(void){
 }
 void sprite_obj_init(void){
 
-	pointer = level_1_coins;
-	for(index = 0,index2 = 0;index < MAX_COINS; ++index){
-		
-		coin_x[index] = 0;
-
-		temp1 = pointer[index2]; // get a byte of data
-		coin_y[index] = temp1;
-		
-		if(temp1 == TURN_OFF) break;
-
-		++index2;
-		
-		coin_active[index] = 0;
-
-		
-		temp1 = pointer[index2]; // get a byte of data
-		coin_room[index] = temp1;
-		
-		++index2;
-		
-		temp1 = pointer[index2]; // get a byte of data
-		coin_actual_x[index] = temp1;
-		
-		++index2;
-	}
+	pointer = level_1_enemy;
 	
-	for(++index;index < MAX_COINS; ++index){
-		coin_y[index] = TURN_OFF;
-	}
-	
-	
-	
-
 	//pointer = level_1_enemies;
 	for(index = 0,index2 = 0;index < MAX_ENEMY; ++index){
 		
