@@ -108,7 +108,7 @@ unsigned char coin_actual_x[MAX_COINS];
 
 
 
-#define MAX_ENEMY 16
+#define MAX_ENEMY 10
 unsigned char enemy_x[MAX_ENEMY];
 unsigned char enemy_y[MAX_ENEMY];
 unsigned char enemy_active[MAX_ENEMY];

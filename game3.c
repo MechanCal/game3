@@ -571,7 +571,7 @@ void sprite_obj_init(void){
 	
 	
 
-	pointer = level_1_enemies;
+	//pointer = level_1_enemies;
 	for(index = 0,index2 = 0;index < MAX_ENEMY; ++index){
 		
 		enemy_x[index] = 0;
