@@ -34,6 +34,47 @@
 
 
 
+/* void PlayGame(void){
+  
+   	ppu_off(); 
+  	pal_bg(palette_bg);
+	pal_spr(palette_sp);	
+	bank_spr(1);
+	set_vram_buffer(); 
+	clear_vram_buffer();
+	
+	load_room();
+	
+	ppu_on_all(); 
+	
+
+	while (1){    
+		ppu_wait_nmi();
+			
+		pad1_new = pad_trigger(0); 
+		pad1 = pad_state(0);		
+		clear_vram_buffer(); 			
+		movement();
+           	check_spr_objects(); // see which objects are on screen
+		sprite_collisions();
+		enemy_moves();
+		set_scroll_x(scroll_x);
+		set_scroll_y(scroll_y);
+		draw_screen_R();
+		draw_sprites();	
+          
+          if(Jim.y < 700)
+            break;
+	}
+  
+  PlayGame();
+  
+  
+}
+
+*/
+
+
 void main (void) {
  //  vram_adr(NTADR_A(10,18));
 //vram_write("PRESS START!", 12);
@@ -41,9 +82,11 @@ void main (void) {
   //vram_adr(NTADR_A(11,10));
   //vram_write("Jim Jim Ghost Adventure", 9);
   //title_screen();
- 
-
   //ppu_on_all();
+  
+  
+   //PlayGame();
+
   	ppu_off(); 
   	pal_bg(palette_bg);
 	pal_spr(palette_sp);	
@@ -72,6 +115,9 @@ void main (void) {
 		draw_sprites();		
 	}
 }
+
+
+
 
 void check_spr_objects(void){
 	// mark each object "active" if they are, and get the screen x
