@@ -21,16 +21,16 @@
  // pal_all(PALETTE);
 //}
 
-void title_screen(void){
-  while(1)
-  {
-    if(pad_trigger(0)&PAD_START || pad_trigger(0)&PAD_A) {
-	ppu_off(); 
-      	//clrscr();
-      	break;
-    }
-  }
-}
+//void title_screen(void){
+ // while(1)
+ // {
+  //  if(pad_trigger(0)&PAD_START || pad_trigger(0)&PAD_A) {
+//	ppu_off(); 
+    	//clrscr();
+  //  	break;
+ // }
+//}
+//
 
 
 
@@ -39,7 +39,7 @@ void main (void) {
 //vram_write("PRESS START!", 12);
   
   //vram_adr(NTADR_A(11,10));
-  //vram_write("The Game!", 9);
+  //vram_write("Jim Jim Ghost Adventure", 9);
   //title_screen();
  
 
