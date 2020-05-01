@@ -37,6 +37,7 @@ FT_TEMP: 		.res 3
 	.export _sfx_init
 	.export _sfx_play
 .endif
+
 .if(FT_DPCM_ENABLE)
         .export _sample_play
 .endif

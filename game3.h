@@ -181,14 +181,14 @@ const unsigned char is_solid[]={
 
 
 
-#define MAX_ROOMS (5-1)
+#define MAX_ROOMS (8-1)
 #define MAX_SCROLL (MAX_ROOMS*0x100)-1
 // data is exactly 240 bytes, 16 * 15
 // doubles as the collision map data
 
 
 const unsigned char * const Rooms[]= {
-	Room1, Room2, Room3, Room4, Room5
+	Room1, Room2, Room3, Room4, Room5, Room6, Room7, Room8
 };
 
 //y, room, x
